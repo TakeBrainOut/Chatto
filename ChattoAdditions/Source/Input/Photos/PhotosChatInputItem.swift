@@ -94,6 +94,9 @@ open class PhotosChatInputItem: ChatInputItemProtocol {
             self.photoInputHandler?(image)
         }
     }
+    
+    open func handleTyping() {
+    }
 }
 
 // MARK: - PhotosInputViewDelegate

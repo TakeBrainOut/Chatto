@@ -32,10 +32,9 @@ public enum MessageStatus {
 }
 
 public protocol MessageModelProtocol: ChatItemProtocol {
-    var senderId: String { get }
     var isIncoming: Bool { get }
     var date: Date { get }
-    var status: MessageStatus { get }
+    var status: MessageStatus { set get }
 }
 
 public protocol DecoratedMessageModelProtocol: MessageModelProtocol {
@@ -45,10 +44,6 @@ public protocol DecoratedMessageModelProtocol: MessageModelProtocol {
 public extension DecoratedMessageModelProtocol {
     var uid: String {
         return self.messageModel.uid
-    }
-
-    var senderId: String {
-        return self.messageModel.senderId
     }
 
     var type: String {
@@ -64,21 +59,28 @@ public extension DecoratedMessageModelProtocol {
     }
 
     var status: MessageStatus {
-        return self.messageModel.status
+        get {
+            return self.messageModel.status
+        }
+        set {
+            self.messageModel.status = newValue
+        }
     }
 }
 
 open class MessageModel: MessageModelProtocol {
     open var uid: String
-    open var senderId: String
     open var type: String
     open var isIncoming: Bool
     open var date: Date
     open var status: MessageStatus
 
-    public init(uid: String, senderId: String, type: String, isIncoming: Bool, date: Date, status: MessageStatus) {
+    public init(uid: String,
+                type: String,
+                isIncoming: Bool,
+                date: Date,
+                status: MessageStatus) {
         self.uid = uid
-        self.senderId = senderId
         self.type = type
         self.isIncoming = isIncoming
         self.date = date

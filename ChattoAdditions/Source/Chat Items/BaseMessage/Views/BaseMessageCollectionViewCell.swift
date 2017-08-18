@@ -39,15 +39,18 @@ public struct BaseMessageCollectionViewCellLayoutConstants {
     public let horizontalInterspacing: CGFloat
     public let horizontalTimestampMargin: CGFloat
     public let maxContainerWidthPercentageForBubbleView: CGFloat
+    public let alignedTopCentered: Bool
 
     public init(horizontalMargin: CGFloat,
                 horizontalInterspacing: CGFloat,
                 horizontalTimestampMargin: CGFloat,
-                maxContainerWidthPercentageForBubbleView: CGFloat) {
+                maxContainerWidthPercentageForBubbleView: CGFloat,
+                alignedTopCentered: Bool) {
         self.horizontalMargin = horizontalMargin
         self.horizontalInterspacing = horizontalInterspacing
         self.horizontalTimestampMargin = horizontalTimestampMargin
         self.maxContainerWidthPercentageForBubbleView = maxContainerWidthPercentageForBubbleView
+        self.alignedTopCentered = alignedTopCentered
     }
 }
 
@@ -187,6 +190,11 @@ open class BaseMessageCollectionViewCell<BubbleViewType>: UICollectionViewCell, 
     public private(set) lazy var failedButton: UIButton = {
         let button = UIButton(type: .custom)
         button.addTarget(self, action: #selector(BaseMessageCollectionViewCell.failedButtonTapped), for: .touchUpInside)
+        button.backgroundColor = UIColor(red:0, green:0, blue:0, alpha:0.03)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor(red:0, green:0, blue:0, alpha:0.08).cgColor
+        button.layer.cornerRadius = 12.0
+        button.layer.masksToBounds = true
         return button
     }()
 
@@ -255,8 +263,9 @@ open class BaseMessageCollectionViewCell<BubbleViewType>: UICollectionViewCell, 
             bubbleView: self.bubbleView,
             isIncoming: self.messageViewModel.isIncoming,
             isFailed: self.messageViewModel.showsFailedIcon,
-            avatarSize: baseStyle.avatarSize(viewModel: messageViewModel),
-            avatarVerticalAlignment: baseStyle.avatarVerticalAlignment(viewModel: messageViewModel)
+            avatarSize: self.messageViewModel.avatarImage.value != nil ? baseStyle.avatarSize(viewModel: messageViewModel) : CGSize.zero,
+            avatarVerticalAlignment: baseStyle.avatarVerticalAlignment(viewModel: messageViewModel),
+            alignedTopCentered: layoutConstants.alignedTopCentered
         )
         var layoutModel = BaseMessageLayoutModel()
         layoutModel.calculateLayout(parameters: parameters)
@@ -316,6 +325,11 @@ open class BaseMessageCollectionViewCell<BubbleViewType>: UICollectionViewCell, 
     func failedButtonTapped() {
         self.onFailedButtonTapped?(self)
     }
+    public var onCellSelectButton: ((_ cell: BaseMessageCollectionViewCell, _ title: String, _ tag: String) -> Void)?
+    @objc
+    public func selectButton(title: String, tag: String) {
+        self.onCellSelectButton?(self, title, tag)
+    }
 
     public var onAvatarTapped: ((_ cell: BaseMessageCollectionViewCell) -> Void)?
     @objc
@@ -360,46 +374,64 @@ struct BaseMessageLayoutModel {
         let horizontalMargin = parameters.horizontalMargin
         let horizontalInterspacing = parameters.horizontalInterspacing
         let avatarSize = parameters.avatarSize
+        let alignedTopCentered = parameters.alignedTopCentered
 
-        let preferredWidthForBubble = (containerWidth * parameters.maxContainerWidthPercentageForBubbleView).bma_round()
+        let preferredWidthForBubble: CGFloat = {
+            if !alignedTopCentered {
+                return (containerWidth * parameters.maxContainerWidthPercentageForBubbleView).bma_round()
+            } else {
+                return containerWidth - horizontalMargin * 2
+            }
+        }()
         let bubbleSize = bubbleView.sizeThatFits(CGSize(width: preferredWidthForBubble, height: .greatestFiniteMagnitude))
         let containerRect = CGRect(origin: CGPoint.zero, size: CGSize(width: containerWidth, height: bubbleSize.height))
 
-        self.bubbleViewFrame = bubbleSize.bma_rect(inContainer: containerRect, xAlignament: .center, yAlignment: .center, dx: 0, dy: 0)
+        let bubbleYAligment: VerticalAlignment = {
+            return !alignedTopCentered ? .center : .top
+        }()
+        
+        self.bubbleViewFrame = bubbleSize.bma_rect(inContainer: containerRect, xAlignament: .center, yAlignment: bubbleYAligment, dx: 0, dy: 0)
         self.failedViewFrame = failedButtonSize.bma_rect(inContainer: containerRect, xAlignament: .center, yAlignment: .center, dx: 0, dy: 0)
         self.avatarViewFrame = avatarSize.bma_rect(inContainer: containerRect, xAlignament: .center, yAlignment: parameters.avatarVerticalAlignment, dx: 0, dy: 0)
 
         // Adjust horizontal positions
 
-        var currentX: CGFloat = 0
-        if isIncoming {
-            currentX = horizontalMargin
-            self.avatarViewFrame.origin.x = currentX
-            currentX += avatarSize.width
-            currentX += horizontalInterspacing
-
-            if isFailed {
-                self.failedViewFrame.origin.x = currentX
-                currentX += failedButtonSize.width
-                currentX += horizontalInterspacing
+        if !alignedTopCentered {
+            var currentX: CGFloat = 0
+            if isIncoming {
+                currentX = horizontalMargin
+                if __CGSizeEqualToSize(avatarSize, CGSize.zero) {
+                    self.avatarViewFrame.origin.x = -avatarSize.width
+                } else {
+                    self.avatarViewFrame.origin.x = currentX
+                    currentX += avatarSize.width
+                }
+                
+                if isFailed {
+                    self.failedViewFrame.origin.x = currentX
+                    currentX += failedButtonSize.width
+                    currentX += horizontalInterspacing
+                } else {
+                    self.failedViewFrame.origin.x = -failedButtonSize.width
+                }
+                self.bubbleViewFrame.origin.x = currentX
             } else {
-                self.failedViewFrame.origin.x = -failedButtonSize.width
+                currentX = containerRect.maxX - horizontalMargin
+                currentX -= bubbleSize.width
+                self.bubbleViewFrame.origin.x = currentX
+                if isFailed {
+                    currentX -= horizontalInterspacing
+                    currentX -= horizontalMargin
+                    currentX -= failedButtonSize.width
+                    self.failedViewFrame.origin.x = currentX
+                } else {
+                    self.failedViewFrame.origin.x = containerRect.width - -failedButtonSize.width
+                }
+                self.avatarViewFrame.origin.x = containerRect.width - -avatarSize.width
             }
-            self.bubbleViewFrame.origin.x = currentX
         } else {
-            currentX = containerRect.maxX - horizontalMargin
-            currentX -= avatarSize.width
-            self.avatarViewFrame.origin.x = currentX
-            currentX -= horizontalInterspacing
-            if isFailed {
-                currentX -= failedButtonSize.width
-                self.failedViewFrame.origin.x = currentX
-                currentX -= horizontalInterspacing
-            } else {
-                self.failedViewFrame.origin.x = containerRect.width - -failedButtonSize.width
-            }
-            currentX -= bubbleSize.width
-            self.bubbleViewFrame.origin.x = currentX
+            self.failedViewFrame.origin.x = containerRect.width - -failedButtonSize.width
+            self.avatarViewFrame.origin.x = containerRect.width - -avatarSize.width
         }
 
         self.size = containerRect.size
@@ -418,4 +450,5 @@ struct BaseMessageLayoutModelParameters {
     let isFailed: Bool
     let avatarSize: CGSize
     let avatarVerticalAlignment: VerticalAlignment
+    let alignedTopCentered: Bool
 }

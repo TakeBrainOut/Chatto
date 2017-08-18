@@ -29,6 +29,7 @@ protocol ChatInputBarPresenter: class {
     func onDidBeginEditing()
     func onDidEndEditing()
     func onSendButtonPressed()
+    func typing()
     func onDidReceiveFocusOnItem(_ item: ChatInputItemProtocol)
 }
 
@@ -163,5 +164,13 @@ extension BasicChatInputBarPresenter {
         self.chatInputBar.showsSendButton = item.showsSendButton
         self.chatInputBar.showsTextView = item.presentationMode == .keyboard
         self.updateFirstResponderWithInputItem(item)
+    }
+    
+    func typing() {
+        if let focusedItem = self.focusedItem {
+            focusedItem.handleTyping()
+        } else if let keyboardItem = self.firstKeyboardInputItem() {
+            keyboardItem.handleTyping()
+        }
     }
 }

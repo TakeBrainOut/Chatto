@@ -31,11 +31,14 @@ open class BaseMessageCollectionViewCellDefaultStyle: BaseMessageCollectionViewC
     public struct Colors {
         let incoming: () -> UIColor
         let outgoing: () -> UIColor
+        let failed: () -> UIColor
         public init(
             incoming: @autoclosure @escaping () -> UIColor,
-            outgoing: @autoclosure @escaping () -> UIColor) {
+            outgoing: @autoclosure @escaping () -> UIColor,
+            failed: @autoclosure @escaping () -> UIColor) {
                 self.incoming = incoming
                 self.outgoing = outgoing
+                self.failed = failed
         }
     }
 
@@ -87,12 +90,12 @@ open class BaseMessageCollectionViewCellDefaultStyle: BaseMessageCollectionViewC
         }
     }
 
-    let colors: Colors
+    public var colors: Colors
     let bubbleBorderImages: BubbleBorderImages?
-    let failedIconImages: FailedIconImages
-    let layoutConstants: BaseMessageCollectionViewCellLayoutConstants
-    let dateTextStyle: DateTextStyle
-    let avatarStyle: AvatarStyle
+    public var failedIconImages: FailedIconImages
+    public var layoutConstants: BaseMessageCollectionViewCellLayoutConstants
+    public var dateTextStyle: DateTextStyle
+    public var avatarStyle: AvatarStyle
     public init (
         colors: Colors = Class.createDefaultColors(),
         bubbleBorderImages: BubbleBorderImages? = Class.createDefaultBubbleBorderImages(),
@@ -160,7 +163,7 @@ open class BaseMessageCollectionViewCellDefaultStyle: BaseMessageCollectionViewC
 
 public extension BaseMessageCollectionViewCellDefaultStyle { // Default values
     static public func createDefaultColors() -> Colors {
-        return Colors(incoming: UIColor.bma_color(rgb: 0xE6ECF2), outgoing: UIColor.bma_color(rgb: 0x3D68F5))
+        return Colors(incoming: UIColor.bma_color(rgb: 0xE6ECF2), outgoing: UIColor.bma_color(rgb: 0x3D68F5), failed: UIColor.red)
     }
 
     static public func createDefaultBubbleBorderImages() -> BubbleBorderImages {
@@ -190,6 +193,7 @@ public extension BaseMessageCollectionViewCellDefaultStyle { // Default values
         return BaseMessageCollectionViewCellLayoutConstants(horizontalMargin: 11,
                                                             horizontalInterspacing: 4,
                                                             horizontalTimestampMargin: 11,
-                                                            maxContainerWidthPercentageForBubbleView: 0.68)
+                                                            maxContainerWidthPercentageForBubbleView: 0.68,
+                                                            alignedTopCentered: false)
     }
 }

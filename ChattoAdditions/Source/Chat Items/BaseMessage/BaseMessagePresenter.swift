@@ -39,6 +39,7 @@ public protocol BaseMessageInteractionHandlerProtocol {
     func userDidTapOnBubble(viewModel: ViewModelT)
     func userDidBeginLongPressOnBubble(viewModel: ViewModelT)
     func userDidEndLongPressOnBubble(viewModel: ViewModelT)
+    func userDidSelectButton(title: String, tag: String, viewModel: ViewModelT)
 }
 
 open class BaseMessagePresenter<BubbleViewT, ViewModelBuilderT, InteractionHandlerT>: BaseChatItemPresenter<BaseMessageCollectionViewCell<BubbleViewT>> where
@@ -121,6 +122,10 @@ open class BaseMessagePresenter<BubbleViewT, ViewModelBuilderT, InteractionHandl
                 guard let sSelf = self else { return }
                 sSelf.onCellFailedButtonTapped(cell.failedButton)
             }
+            cell.onCellSelectButton = { [weak self] (cell, title, tag) in
+                guard let sSelf = self else { return }
+                sSelf.onCellSelectButton(title, tag: tag)
+            }
             additionalConfiguration?()
         }, animated: animated, completion: nil)
     }
@@ -193,5 +198,9 @@ open class BaseMessagePresenter<BubbleViewT, ViewModelBuilderT, InteractionHandl
 
     open func onCellFailedButtonTapped(_ failedButtonView: UIView) {
         self.interactionHandler?.userDidTapOnFailIcon(viewModel: self.messageViewModel, failIconView: failedButtonView)
+    }
+    
+    open func onCellSelectButton(_ title: String, tag: String) {
+        self.interactionHandler?.userDidSelectButton(title: title, tag: tag, viewModel: self.messageViewModel)
     }
 }

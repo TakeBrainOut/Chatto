@@ -66,7 +66,7 @@ open class TextMessageCollectionViewCellDefaultStyle: TextMessageCollectionViewC
     }
 
     public let bubbleImages: BubbleImages
-    public let textStyle: TextStyle
+    public var textStyle: TextStyle
     public let baseStyle: BaseMessageCollectionViewCellDefaultStyle
     public init (
         bubbleImages: BubbleImages = Class.createDefaultBubbleImages(),
@@ -125,18 +125,7 @@ open class TextMessageCollectionViewCellDefaultStyle: TextMessageCollectionViewC
     }
 
     open func createImage(templateImage image: UIImage, isIncoming: Bool, status: MessageViewModelStatus, isSelected: Bool) -> UIImage {
-        var color = isIncoming ? self.baseStyle.baseColorIncoming : self.baseStyle.baseColorOutgoing
-
-        switch status {
-        case .success:
-            break
-        case .failed, .sending:
-            color = color.bma_blendWithColor(UIColor.white.withAlphaComponent(0.70))
-        }
-
-        if isSelected {
-            color = color.bma_blendWithColor(UIColor.black.withAlphaComponent(0.10))
-        }
+        let color = isIncoming ? self.baseStyle.baseColorIncoming : self.baseStyle.baseColorOutgoing
 
         return image.bma_tintWithColor(color)
     }
@@ -183,8 +172,8 @@ public extension TextMessageCollectionViewCellDefaultStyle { // Default values
             font: UIFont.systemFont(ofSize: 16),
             incomingColor: UIColor.black,
             outgoingColor: UIColor.white,
-            incomingInsets: UIEdgeInsets(top: 10, left: 19, bottom: 10, right: 15),
-            outgoingInsets: UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 19)
+            incomingInsets: UIEdgeInsets(top: 7, left: 12, bottom: 10, right: 12),
+            outgoingInsets: UIEdgeInsets(top: 7, left: 12, bottom: 10, right: 12)
         )
     }
 }

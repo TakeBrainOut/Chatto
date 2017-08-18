@@ -1,98 +1,104 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G12a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Display-Regular.otf">
+            <string>SFUIDisplay-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ChatInputBar" customModule="ChattoAdditions" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="123"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="jcX-iS-uA7" customClass="ChatInputBar" customModule="ChattoAdditions" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fsh-hH-hKG" userLabel="TextView" customClass="ExpandableTextView" customModule="ChattoAdditions" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q1S-4p-g0F">
+                    <rect key="frame" x="0.0" y="8" width="600" height="56"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </view>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="QbG-c6-6rk" userLabel="TextView" customClass="ExpandableTextView" customModule="ChattoAdditions" customModuleProvider="target">
+                    <rect key="frame" x="10" y="21" width="531" height="20"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="tintColor" red="0.25882352939999997" green="0.41960784309999999" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="17"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                 </textView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hkz-tq-X6j" userLabel="Tab selector container">
-                    <rect key="frame" x="0.0" y="79" width="600" height="44"/>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8RZ-ca-j4F" userLabel="Tab selector container">
+                    <rect key="frame" x="556" y="0.0" width="44" height="64"/>
                     <subviews>
-                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WNX-pj-5AB" customClass="HorizontalStackScrollView" customModule="ChattoAdditions" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="506" height="44"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </scrollView>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hE9-hU-Ci1">
-                            <rect key="frame" x="506" y="0.0" width="94" height="44"/>
-                            <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
-                            <state key="normal" title="Button"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ev-CU-3ov">
+                            <rect key="frame" x="-5" y="9.5" width="44" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="44" id="0mR-vv-EAY"/>
+                                <constraint firstAttribute="height" constant="44" id="WVH-38-NMM"/>
+                            </constraints>
+                            <state key="normal" image="icSendEnable"/>
+                            <state key="disabled" image="icSendDisable"/>
                             <connections>
-                                <action selector="buttonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="9hi-0N-Y5F"/>
+                                <action selector="buttonTapped:" destination="jcX-iS-uA7" eventType="touchUpInside" id="1wz-6r-nim"/>
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="hE9-hU-Ci1" secondAttribute="trailing" id="ABn-ah-JYL"/>
-                        <constraint firstItem="WNX-pj-5AB" firstAttribute="leading" secondItem="hkz-tq-X6j" secondAttribute="leading" id="Jk5-7M-Mh8"/>
-                        <constraint firstItem="hE9-hU-Ci1" firstAttribute="top" secondItem="hkz-tq-X6j" secondAttribute="top" id="KsA-Bb-G4V"/>
-                        <constraint firstItem="hE9-hU-Ci1" firstAttribute="leading" secondItem="WNX-pj-5AB" secondAttribute="trailing" id="M1Q-jh-zRz"/>
-                        <constraint firstItem="WNX-pj-5AB" firstAttribute="top" secondItem="hkz-tq-X6j" secondAttribute="top" id="QdZ-iC-yJd"/>
-                        <constraint firstAttribute="trailing" secondItem="WNX-pj-5AB" secondAttribute="trailing" id="ciR-Nt-1tI"/>
-                        <constraint firstAttribute="bottom" secondItem="WNX-pj-5AB" secondAttribute="bottom" id="i7l-t6-4IG"/>
-                        <constraint firstAttribute="height" constant="44" id="vwa-F7-EIB"/>
-                        <constraint firstAttribute="bottom" secondItem="hE9-hU-Ci1" secondAttribute="bottom" id="x7H-Lm-ad7"/>
+                        <constraint firstItem="7ev-CU-3ov" firstAttribute="centerY" secondItem="8RZ-ca-j4F" secondAttribute="centerY" id="2op-Iv-KOw"/>
+                        <constraint firstItem="7ev-CU-3ov" firstAttribute="leading" secondItem="8RZ-ca-j4F" secondAttribute="leading" constant="-5" id="BUX-69-edY"/>
+                        <constraint firstAttribute="width" constant="44" id="ZwG-0K-FGK"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="ciR-Nt-1tI"/>
-                        </mask>
-                    </variation>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b1n-fp-7di" userLabel="Top border">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oMs-NA-MON">
+                    <rect key="frame" x="10" y="53" width="531" height="1"/>
+                    <color key="backgroundColor" red="0.039215686270000001" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="1" identifier="top-border-height" id="IIv-qg-Tlp"/>
+                        <constraint firstAttribute="height" constant="1" id="vaT-WC-3G4"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="fsh-hH-hKG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="0hb-TC-77u"/>
-                <constraint firstItem="hkz-tq-X6j" firstAttribute="top" secondItem="fsh-hH-hKG" secondAttribute="bottom" id="4Vl-vV-gaa"/>
-                <constraint firstAttribute="bottom" secondItem="hkz-tq-X6j" secondAttribute="bottom" id="HFl-3K-Xpk"/>
-                <constraint firstAttribute="trailing" secondItem="hkz-tq-X6j" secondAttribute="trailing" id="V4u-Kv-Ub2"/>
-                <constraint firstItem="fsh-hH-hKG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ZsI-iu-9nR"/>
-                <constraint firstItem="hkz-tq-X6j" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="eGb-Fb-2Of"/>
-                <constraint firstItem="hkz-tq-X6j" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="gpt-vU-KzZ"/>
-                <constraint firstAttribute="trailing" secondItem="b1n-fp-7di" secondAttribute="trailing" id="lmb-AV-eyD"/>
-                <constraint firstItem="b1n-fp-7di" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="mci-2b-Z7f"/>
-                <constraint firstItem="b1n-fp-7di" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="sKU-B2-FjZ"/>
-                <constraint firstAttribute="trailing" secondItem="fsh-hH-hKG" secondAttribute="trailing" id="vVY-rg-Rwc"/>
+                <constraint firstItem="8RZ-ca-j4F" firstAttribute="top" secondItem="jcX-iS-uA7" secondAttribute="top" id="40J-3s-261"/>
+                <constraint firstItem="oMs-NA-MON" firstAttribute="trailing" secondItem="QbG-c6-6rk" secondAttribute="trailing" id="6Uj-AM-auC"/>
+                <constraint firstAttribute="trailing" secondItem="q1S-4p-g0F" secondAttribute="trailing" id="6t9-jD-fVy"/>
+                <constraint firstAttribute="bottom" secondItem="8RZ-ca-j4F" secondAttribute="bottom" id="7Zu-hr-EDE"/>
+                <constraint firstItem="oMs-NA-MON" firstAttribute="leading" secondItem="QbG-c6-6rk" secondAttribute="leading" id="IMN-4R-Vga"/>
+                <constraint firstAttribute="trailing" secondItem="8RZ-ca-j4F" secondAttribute="trailing" id="OGF-fu-KiB"/>
+                <constraint firstItem="q1S-4p-g0F" firstAttribute="leading" secondItem="jcX-iS-uA7" secondAttribute="leading" id="QRp-3L-7qh"/>
+                <constraint firstAttribute="bottom" secondItem="QbG-c6-6rk" secondAttribute="bottom" constant="23" id="UiI-V7-hid"/>
+                <constraint firstItem="QbG-c6-6rk" firstAttribute="leading" secondItem="jcX-iS-uA7" secondAttribute="leading" constant="10" id="ZCx-4B-eR0"/>
+                <constraint firstAttribute="bottom" secondItem="q1S-4p-g0F" secondAttribute="bottom" id="aPs-wo-k4U"/>
+                <constraint firstItem="q1S-4p-g0F" firstAttribute="top" secondItem="jcX-iS-uA7" secondAttribute="top" constant="8" id="alW-Gz-DkW"/>
+                <constraint firstItem="8RZ-ca-j4F" firstAttribute="top" secondItem="jcX-iS-uA7" secondAttribute="top" id="gAn-vf-BuE"/>
+                <constraint firstItem="QbG-c6-6rk" firstAttribute="top" secondItem="jcX-iS-uA7" secondAttribute="top" constant="21" id="giu-KI-kRz"/>
+                <constraint firstItem="8RZ-ca-j4F" firstAttribute="leading" secondItem="QbG-c6-6rk" secondAttribute="trailing" constant="15" id="srt-00-eBG"/>
+                <constraint firstAttribute="bottom" secondItem="oMs-NA-MON" secondAttribute="bottom" constant="10" id="ywn-ki-AVm"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="constraints">
-                    <exclude reference="gpt-vU-KzZ"/>
+                    <exclude reference="40J-3s-261"/>
                 </mask>
             </variation>
             <connections>
-                <outlet property="scrollView" destination="WNX-pj-5AB" id="Qqy-Ny-mng"/>
-                <outlet property="sendButton" destination="hE9-hU-Ci1" id="VFQ-Pb-J37"/>
-                <outlet property="tabBarContainerHeightConstraint" destination="vwa-F7-EIB" id="d3G-fs-hEH"/>
-                <outlet property="textView" destination="fsh-hH-hKG" id="QMH-G9-ADs"/>
-                <outlet property="topBorderHeightConstraint" destination="IIv-qg-Tlp" id="qiB-dH-AHS"/>
-                <outletCollection property="constraintsForVisibleTextView" destination="4Vl-vV-gaa" collectionClass="NSMutableArray" id="rBg-0B-c4B"/>
-                <outletCollection property="constraintsForHiddenTextView" destination="gpt-vU-KzZ" collectionClass="NSMutableArray" id="EzL-hX-Wle"/>
-                <outletCollection property="constraintsForHiddenSendButton" destination="ciR-Nt-1tI" collectionClass="NSMutableArray" id="KTM-lg-5xh"/>
-                <outletCollection property="constraintsForVisibleSendButton" destination="ABn-ah-JYL" collectionClass="NSMutableArray" id="oqj-uC-3TX"/>
+                <outlet property="sendButton" destination="7ev-CU-3ov" id="cqq-7T-Irv"/>
+                <outlet property="shadowView" destination="q1S-4p-g0F" id="ZCO-tU-c7d"/>
+                <outlet property="textView" destination="QbG-c6-6rk" id="6pn-SG-SJg"/>
             </connections>
-            <point key="canvasLocation" x="-341" y="68.5"/>
+            <point key="canvasLocation" x="-374" y="1"/>
         </view>
     </objects>
+    <resources>
+        <image name="icSendDisable" width="30" height="30"/>
+        <image name="icSendEnable" width="30" height="30"/>
+    </resources>
 </document>
