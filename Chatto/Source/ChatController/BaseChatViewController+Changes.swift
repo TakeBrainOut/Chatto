@@ -229,7 +229,6 @@ extension BaseChatViewController: ChatDataSourceDelegateProtocol {
     private func updateModels(newItems: [ChatItemProtocol], oldItems: ChatItemCompanionCollection, updateType: UpdateType, completion: @escaping () -> Void) {
         let collectionViewWidth = self.collectionView.bounds.width
         let updateType = self.isFirstLayout ? .firstLoad : updateType
-        let performInBackground = updateType != .firstLoad
 
         self.autoLoadingEnabled = false
         let perfomBatchUpdates: (_ changes: CollectionChanges, _ updateModelClosure: @escaping () -> Void) -> Void  = { [weak self] (changes, updateModelClosure) in
@@ -250,17 +249,8 @@ extension BaseChatViewController: ChatDataSourceDelegateProtocol {
                 collectionViewWidth:collectionViewWidth)
         }
 
-        if performInBackground {
-            DispatchQueue.global(qos: .userInitiated).async { () -> Void in
-                let modelUpdate = createModelUpdate()
-                DispatchQueue.main.async(execute: { () -> Void in
-                    perfomBatchUpdates(modelUpdate.changes, modelUpdate.updateModelClosure)
-                })
-            }
-        } else {
-            let modelUpdate = createModelUpdate()
-            perfomBatchUpdates(modelUpdate.changes, modelUpdate.updateModelClosure)
-        }
+        let modelUpdate = createModelUpdate()
+        perfomBatchUpdates(modelUpdate.changes, modelUpdate.updateModelClosure)
     }
 
     private func createModelUpdates(newItems: [ChatItemProtocol], oldItems: ChatItemCompanionCollection, collectionViewWidth: CGFloat) -> (changes: CollectionChanges, updateModelClosure: () -> Void) {
