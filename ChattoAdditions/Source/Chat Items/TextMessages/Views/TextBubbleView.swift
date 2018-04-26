@@ -43,7 +43,7 @@ public final class TextBubbleView: UIView, MaximumLayoutWidthSpecificable, Backg
                 self.textView.dataDetectorTypes = UIDataDetectorTypes()
                 self.textView.isSelectable = false
             } else {
-                self.textView.dataDetectorTypes = .all
+                self.textView.dataDetectorTypes = UIDataDetectorTypes()
                 self.textView.isSelectable = true
             }
         }
@@ -98,7 +98,7 @@ public final class TextBubbleView: UIView, MaximumLayoutWidthSpecificable, Backg
         })
         textView.isEditable = false
         textView.isSelectable = true
-        textView.dataDetectorTypes = .all
+        textView.dataDetectorTypes = UIDataDetectorTypes()
         textView.scrollsToTop = false
         textView.isScrollEnabled = false
         textView.bounces = false

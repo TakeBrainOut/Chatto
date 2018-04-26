@@ -91,6 +91,7 @@ open class ChatInputBar: ReusableXibView {
         super.awakeFromNib()
         self.textView.scrollsToTop = false
         self.textView.delegate = self
+        self.textView.textAlignment = NSTextAlignment.left
         self.sendButton.isEnabled = false
         
         let color = UIColor.black.withAlphaComponent(0.05)
