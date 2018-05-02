@@ -40,10 +40,10 @@ public final class TextBubbleView: UIView, MaximumLayoutWidthSpecificable, Backg
     public var viewContext: ViewContext = .normal {
         didSet {
             if self.viewContext == .sizing {
-                self.textView.dataDetectorTypes = UIDataDetectorTypes()
+                self.textView.dataDetectorTypes = UIDataDetectorTypes.link
                 self.textView.isSelectable = false
             } else {
-                self.textView.dataDetectorTypes = UIDataDetectorTypes()
+                self.textView.dataDetectorTypes = UIDataDetectorTypes.link
                 self.textView.isSelectable = true
             }
         }
@@ -98,7 +98,7 @@ public final class TextBubbleView: UIView, MaximumLayoutWidthSpecificable, Backg
         })
         textView.isEditable = false
         textView.isSelectable = true
-        textView.dataDetectorTypes = UIDataDetectorTypes()
+        textView.dataDetectorTypes = UIDataDetectorTypes.link
         textView.scrollsToTop = false
         textView.isScrollEnabled = false
         textView.bounces = false
