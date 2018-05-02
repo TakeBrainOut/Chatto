@@ -119,6 +119,7 @@ open class ChatInputBar: ReusableXibView {
             self.setNeedsUpdateConstraints()
             self.setNeedsLayout()
             self.updateIntrinsicContentSizeAnimated()
+            self.updateSendButton()
         }
     }
 
@@ -161,7 +162,7 @@ open class ChatInputBar: ReusableXibView {
     }
 
     fileprivate func updateSendButton() {
-        self.sendButton.isEnabled = self.shouldEnableSendButton(self)
+        self.sendButton.isEnabled = self.shouldEnableSendButton(self) && self.showsSendButton
     }
 
     @IBAction func buttonTapped(_ sender: AnyObject) {
