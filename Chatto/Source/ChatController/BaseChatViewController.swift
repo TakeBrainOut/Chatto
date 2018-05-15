@@ -131,8 +131,9 @@ open class BaseChatViewController: UIViewController, UICollectionViewDataSource,
         self.view.addSubview(self.collectionView)
         self.view.addConstraint(NSLayoutConstraint(item: self.view, attribute: .top, relatedBy: .equal, toItem: self.collectionView, attribute: .top, multiplier: 1, constant: 0))
         self.view.addConstraint(NSLayoutConstraint(item: self.view, attribute: .leading, relatedBy: .equal, toItem: self.collectionView, attribute: .leading, multiplier: 1, constant: 0))
-        self.view.addConstraint(NSLayoutConstraint(item: self.view, attribute: .bottom, relatedBy: .equal, toItem: self.collectionView, attribute: .bottom, multiplier: 1, constant: 0))
         self.view.addConstraint(NSLayoutConstraint(item: self.view, attribute: .trailing, relatedBy: .equal, toItem: self.collectionView, attribute: .trailing, multiplier: 1, constant: 0))
+        self.collectionViewBottomConstraint = NSLayoutConstraint(item: self.view, attribute: .bottom, relatedBy: .equal, toItem: self.collectionView, attribute: .bottom, multiplier: 1, constant: 0)
+        self.view.addConstraint(self.collectionViewBottomConstraint)
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.accessoryViewRevealer = AccessoryViewRevealer(collectionView: self.collectionView)
@@ -147,6 +148,7 @@ open class BaseChatViewController: UIViewController, UICollectionViewDataSource,
     var onAllBatchUpdatesFinished: (() -> Void)?
 
     private var inputContainerBottomConstraint: NSLayoutConstraint!
+    private var collectionViewBottomConstraint: NSLayoutConstraint!
     private func addInputViews() {
         self.inputContainer = UIView(frame: CGRect.zero)
         self.inputContainer.autoresizingMask = UIViewAutoresizing()
@@ -178,8 +180,10 @@ open class BaseChatViewController: UIViewController, UICollectionViewDataSource,
         
         if navigatedController.hidesBottomBarWhenPushed && (navigationController?.viewControllers.count ?? 0) > 1 && navigationController?.viewControllers.last == navigatedController {
             self.inputContainerBottomConstraint.constant = 0
+            self.collectionViewBottomConstraint.constant = 0
         } else {
             self.inputContainerBottomConstraint.constant = self.bottomLayoutGuide.length
+            self.collectionViewBottomConstraint.constant = self.bottomLayoutGuide.length
         }
     }
 
