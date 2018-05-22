@@ -150,6 +150,14 @@ open class ChatInputBar: ReusableXibView {
             self.textView.becomeFirstResponder()
         }
     }
+    
+    open func resignFirstResponderTextView() {
+        guard self.textView.isFirstResponder else {
+            return
+        }
+        
+        self.textView.resignFirstResponder()
+    }
 
     public var inputText: String {
         get {
