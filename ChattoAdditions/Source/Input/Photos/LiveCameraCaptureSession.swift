@@ -101,8 +101,8 @@ class LiveCameraCaptureSession: LiveCameraCaptureSessionProtocol {
 
     private func addInputDevicesIfNeeded() {
         assert(!Thread.isMainThread, "This can be very slow, make sure it happens in a background thread")
-        if self.captureSession?.inputs?.count == 0 {
-            let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+        if self.captureSession?.inputs.count == 0 {
+            guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return }
             do {
                 let input = try AVCaptureDeviceInput(device: device)
                 self.captureSession?.addInput(input)
@@ -114,7 +114,7 @@ class LiveCameraCaptureSession: LiveCameraCaptureSessionProtocol {
 
     private func removeInputDevices() {
         assert(!Thread.isMainThread, "This can be very slow, make sure it happens in a background thread")
-        self.captureSession?.inputs?.forEach { (input) in
+        self.captureSession?.inputs.forEach { (input) in
             self.captureSession?.removeInput(input as! AVCaptureInput)
         }
     }

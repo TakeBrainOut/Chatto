@@ -25,7 +25,7 @@
 import UIKit
 
 open class PhotoMessageCollectionViewCellDefaultStyle: PhotoMessageCollectionViewCellStyleProtocol {
-    typealias Class = PhotoMessageCollectionViewCellDefaultStyle
+    public typealias Class = PhotoMessageCollectionViewCellDefaultStyle
 
     public struct BubbleMasks {
         public let incomingTail: () -> UIImage

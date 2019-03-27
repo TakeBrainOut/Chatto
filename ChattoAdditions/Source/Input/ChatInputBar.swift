@@ -50,13 +50,13 @@ open class ChatInputBar: ReusableXibView {
 
     public var iconActiveSendImage: UIImage? {
         didSet {
-            self.sendButton.setImage(self.iconActiveSendImage, for: UIControlState.normal)
+            self.sendButton.setImage(self.iconActiveSendImage, for: UIControl.State.normal)
         }
     }
     public var iconInactiveSendImage: UIImage? {
         didSet {
-            self.sendButton.setImage(self.iconInactiveSendImage, for: UIControlState.disabled)
-            self.sendButton.setImage(self.iconInactiveSendImage, for: UIControlState.highlighted)
+            self.sendButton.setImage(self.iconInactiveSendImage, for: UIControl.State.disabled)
+            self.sendButton.setImage(self.iconInactiveSendImage, for: UIControl.State.highlighted)
         }
     }
     
@@ -126,7 +126,7 @@ open class ChatInputBar: ReusableXibView {
     public var maxCharactersCount: UInt? // nil -> unlimited
 
     private func updateIntrinsicContentSizeAnimated() {
-        let options: UIViewAnimationOptions = [.beginFromCurrentState, .allowUserInteraction]
+        let options: UIView.AnimationOptions = [.beginFromCurrentState, .allowUserInteraction]
         UIView.animate(withDuration: 0.25, delay: 0, options: options, animations: { () -> Void in
             self.invalidateIntrinsicContentSize()
             self.layoutIfNeeded()
@@ -237,9 +237,9 @@ extension ChatInputBar: UITextViewDelegate {
         
         let range = self.textView.text.bma_rangeFromNSRange(nsRange)
         if let maxCharactersCount = self.maxCharactersCount {
-            let currentCount = textView.text.characters.count
-            let rangeLength = textView.text.substring(with: range).characters.count
-            let nextCount = currentCount - rangeLength + text.characters.count
+            let currentCount = textView.text.count
+            let rangeLength = textView.text.substring(with: range).count
+            let nextCount = currentCount - rangeLength + text.count
             return UInt(nextCount) <= maxCharactersCount
         }
         return true

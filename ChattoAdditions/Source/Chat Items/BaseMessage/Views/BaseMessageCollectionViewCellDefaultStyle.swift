@@ -26,7 +26,7 @@ import UIKit
 
 open class BaseMessageCollectionViewCellDefaultStyle: BaseMessageCollectionViewCellStyleProtocol {
 
-    typealias Class = BaseMessageCollectionViewCellDefaultStyle
+    public typealias Class = BaseMessageCollectionViewCellDefaultStyle
 
     public struct Colors {
         let incoming: () -> UIColor
@@ -124,10 +124,10 @@ open class BaseMessageCollectionViewCellDefaultStyle: BaseMessageCollectionViewC
     private lazy var dateFont: UIFont = self.dateTextStyle.font()
     private lazy var dateFontColor: UIColor = self.dateTextStyle.color()
 
-    private lazy var dateStringAttributes: [String : AnyObject] = {
+    private lazy var dateStringAttributes: [NSAttributedString.Key : AnyObject] = {
         return [
-            NSFontAttributeName : self.dateFont,
-            NSForegroundColorAttributeName: self.dateFontColor
+            NSAttributedString.Key.font : self.dateFont,
+            NSAttributedString.Key.foregroundColor: self.dateFontColor
         ]
     }()
 
@@ -162,11 +162,11 @@ open class BaseMessageCollectionViewCellDefaultStyle: BaseMessageCollectionViewC
 }
 
 public extension BaseMessageCollectionViewCellDefaultStyle { // Default values
-    static public func createDefaultColors() -> Colors {
+    static func createDefaultColors() -> Colors {
         return Colors(incoming: UIColor.bma_color(rgb: 0xE6ECF2), outgoing: UIColor.bma_color(rgb: 0x3D68F5), failed: UIColor.red)
     }
 
-    static public func createDefaultBubbleBorderImages() -> BubbleBorderImages {
+    static func createDefaultBubbleBorderImages() -> BubbleBorderImages {
         return BubbleBorderImages(
             borderIncomingTail: UIImage(named: "bubble-incoming-border-tail", in: Bundle(for: Class.self), compatibleWith: nil)!,
             borderIncomingNoTail: UIImage(named: "bubble-incoming-border", in: Bundle(for: Class.self), compatibleWith: nil)!,
@@ -175,7 +175,7 @@ public extension BaseMessageCollectionViewCellDefaultStyle { // Default values
         )
     }
 
-    static public func createDefaultFailedIconImages() -> FailedIconImages {
+    static func createDefaultFailedIconImages() -> FailedIconImages {
         let normal = {
             return UIImage(named: "base-message-failed-icon", in: Bundle(for: Class.self), compatibleWith: nil)!
         }
@@ -185,11 +185,11 @@ public extension BaseMessageCollectionViewCellDefaultStyle { // Default values
         )
     }
 
-    static public func createDefaultDateTextStyle() -> DateTextStyle {
+    static func createDefaultDateTextStyle() -> DateTextStyle {
         return DateTextStyle(font: UIFont.systemFont(ofSize: 12), color: UIColor.bma_color(rgb: 0x9aa3ab))
     }
 
-    static public func createDefaultLayoutConstants() -> BaseMessageCollectionViewCellLayoutConstants {
+    static func createDefaultLayoutConstants() -> BaseMessageCollectionViewCellLayoutConstants {
         return BaseMessageCollectionViewCellLayoutConstants(horizontalMargin: 11,
                                                             horizontalInterspacing: 4,
                                                             horizontalTimestampMargin: 11,

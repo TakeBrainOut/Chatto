@@ -26,7 +26,6 @@ import UIKit
 import Chatto
 
 open class TextMessageCollectionViewCellDefaultStyle: TextMessageCollectionViewCellStyleProtocol {
-    typealias Class = TextMessageCollectionViewCellDefaultStyle
 
     public struct BubbleImages {
         let incomingTail: () -> UIImage
@@ -69,8 +68,8 @@ open class TextMessageCollectionViewCellDefaultStyle: TextMessageCollectionViewC
     public var textStyle: TextStyle
     public let baseStyle: BaseMessageCollectionViewCellDefaultStyle
     public init (
-        bubbleImages: BubbleImages = Class.createDefaultBubbleImages(),
-        textStyle: TextStyle = Class.createDefaultTextStyle(),
+        bubbleImages: BubbleImages = TextMessageCollectionViewCellDefaultStyle.createDefaultBubbleImages(),
+        textStyle: TextStyle = TextMessageCollectionViewCellDefaultStyle.createDefaultTextStyle(),
         baseStyle: BaseMessageCollectionViewCellDefaultStyle = BaseMessageCollectionViewCellDefaultStyle()) {
             self.bubbleImages = bubbleImages
             self.textStyle = textStyle
@@ -160,10 +159,10 @@ public extension TextMessageCollectionViewCellDefaultStyle { // Default values
 
     static public func createDefaultBubbleImages() -> BubbleImages {
         return BubbleImages(
-            incomingTail: UIImage(named: "bubble-incoming-tail", in: Bundle(for: Class.self), compatibleWith: nil)!,
-            incomingNoTail: UIImage(named: "bubble-incoming", in: Bundle(for: Class.self), compatibleWith: nil)!,
-            outgoingTail: UIImage(named: "bubble-outgoing-tail", in: Bundle(for: Class.self), compatibleWith: nil)!,
-            outgoingNoTail: UIImage(named: "bubble-outgoing", in: Bundle(for: Class.self), compatibleWith: nil)!
+            incomingTail: UIImage(named: "bubble-incoming-tail", in: Bundle(for: TextMessageCollectionViewCellDefaultStyle.self), compatibleWith: nil)!,
+            incomingNoTail: UIImage(named: "bubble-incoming", in: Bundle(for: TextMessageCollectionViewCellDefaultStyle.self), compatibleWith: nil)!,
+            outgoingTail: UIImage(named: "bubble-outgoing-tail", in: Bundle(for: TextMessageCollectionViewCellDefaultStyle.self), compatibleWith: nil)!,
+            outgoingNoTail: UIImage(named: "bubble-outgoing", in: Bundle(for: TextMessageCollectionViewCellDefaultStyle.self), compatibleWith: nil)!
         )
     }
 

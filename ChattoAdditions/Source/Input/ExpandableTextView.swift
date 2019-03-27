@@ -50,7 +50,7 @@ open class ExpandableTextView: UITextView {
     }
 
     private func commonInit() {
-        NotificationCenter.default.addObserver(self, selector: #selector(ExpandableTextView.textDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(ExpandableTextView.textDidChange), name: UITextView.textDidChangeNotification, object: self)
         self.configurePlaceholder()
         self.updatePlaceholderVisibility()
     }
@@ -98,7 +98,7 @@ open class ExpandableTextView: UITextView {
         self.placeholder.accessibilityIdentifier = accessibilityIdentifier
     }
 
-    func textDidChange() {
+    @objc func textDidChange() {
         self.updatePlaceholderVisibility()
         self.scrollToCaret()
 

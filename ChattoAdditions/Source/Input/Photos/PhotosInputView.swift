@@ -34,8 +34,8 @@ public struct PhotosInputViewAppearance {
 }
 
 protocol PhotosInputViewProtocol {
-    weak var delegate: PhotosInputViewDelegate? { get set }
-    weak var presentingController: UIViewController? { get }
+    var delegate: PhotosInputViewDelegate? { get set }
+    var presentingController: UIViewController? { get }
 }
 
 protocol PhotosInputViewDelegate: class {
@@ -58,7 +58,7 @@ class PhotosInputView: UIView, PhotosInputViewProtocol {
     fileprivate var itemSizeCalculator: PhotosInputViewItemSizeCalculator!
 
     var cameraAuthorizationStatus: AVAuthorizationStatus {
-        return AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo)
+        return AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
     }
 
     var photoLibraryAuthorizationStatus: PHAuthorizationStatus {
@@ -110,7 +110,7 @@ class PhotosInputView: UIView, PhotosInputViewProtocol {
     private func requestAccessToVideo() {
         guard self.cameraAuthorizationStatus != .authorized else { return }
 
-        AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo) { (_) -> Void in
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { (_) -> Void in
             DispatchQueue.main.async(execute: { () -> Void in
                 self.reloadVideoItem()
             })

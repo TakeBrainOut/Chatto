@@ -25,8 +25,7 @@
 import Foundation
 
 open class PhotosChatInputItem: ChatInputItemProtocol {
-    typealias Class = PhotosChatInputItem
-
+    
     public var photoInputHandler: ((UIImage) -> Void)?
     public var cameraPermissionHandler: (() -> Void)?
     public var photosPermissionHandler: (() -> Void)?
@@ -35,8 +34,8 @@ open class PhotosChatInputItem: ChatInputItemProtocol {
     let buttonAppearance: TabInputButtonAppearance
     let inputViewAppearance: PhotosInputViewAppearance
     public init(presentingController: UIViewController?,
-                tabInputButtonAppearance: TabInputButtonAppearance = Class.createDefaultButtonAppearance(),
-                inputViewAppearance: PhotosInputViewAppearance = Class.createDefaultInputViewAppearance()) {
+                tabInputButtonAppearance: TabInputButtonAppearance = PhotosChatInputItem.createDefaultButtonAppearance(),
+                inputViewAppearance: PhotosInputViewAppearance = PhotosChatInputItem.createDefaultInputViewAppearance()) {
         self.presentingController = presentingController
         self.buttonAppearance = tabInputButtonAppearance
         self.inputViewAppearance = inputViewAppearance
@@ -44,9 +43,9 @@ open class PhotosChatInputItem: ChatInputItemProtocol {
 
     public static func createDefaultButtonAppearance() -> TabInputButtonAppearance {
         let images: [UIControlStateWrapper: UIImage] = [
-            UIControlStateWrapper(state: .normal): UIImage(named: "camera-icon-unselected", in: Bundle(for: Class.self), compatibleWith: nil)!,
-            UIControlStateWrapper(state: .selected): UIImage(named: "camera-icon-selected", in: Bundle(for: Class.self), compatibleWith: nil)!,
-            UIControlStateWrapper(state: .highlighted): UIImage(named: "camera-icon-selected", in: Bundle(for: Class.self), compatibleWith: nil)!
+            UIControlStateWrapper(state: .normal): UIImage(named: "camera-icon-unselected", in: Bundle(for: PhotosChatInputItem.self), compatibleWith: nil)!,
+            UIControlStateWrapper(state: .selected): UIImage(named: "camera-icon-selected", in: Bundle(for: PhotosChatInputItem.self), compatibleWith: nil)!,
+            UIControlStateWrapper(state: .highlighted): UIImage(named: "camera-icon-selected", in: Bundle(for: PhotosChatInputItem.self), compatibleWith: nil)!
         ]
         return TabInputButtonAppearance(images: images, size: nil)
     }
