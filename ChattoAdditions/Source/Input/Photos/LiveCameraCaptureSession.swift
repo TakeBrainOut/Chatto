@@ -92,7 +92,7 @@ class LiveCameraCaptureSession: LiveCameraCaptureSessionProtocol {
         #if !(arch(i386) || arch(x86_64))
             let session = AVCaptureSession()
             self.captureLayer = AVCaptureVideoPreviewLayer(session: session)
-            self.captureLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+            self.captureLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
             return session
         #else
             return nil
